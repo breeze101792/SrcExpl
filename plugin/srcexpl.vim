@@ -626,7 +626,7 @@ function! <SID>SrcExpl_WinNew(wincmd)
     call setwinvar(srcexpl_win, s:SrcExpl_winName, 1)
     let s:SrcExpl_Window = srcexpl_win
     " Keep the height of Source Explorer window although it could be resized
-    exe 'set winfixheight'
+    " exe 'set winfixheight'
     return 1
 
 endfunction "  }}}
@@ -1491,19 +1491,19 @@ function! <SID>SrcExpl_Init()
            \ '\v\.@<=\d+')[1:] % len(g:SrcExpl_colorSchemeList)]
 
     " Auto change current work directory
-    exe "set autochdir"
+    " exe "set autochdir"
     " Let Vim find the possible tags file
-    exe "set tags=tags;"
+    " exe "set tags=tags;"
     " Set the actual update time according to user's requirement
     " 100 milliseconds by default
-    exe "set updatetime=" . string(g:SrcExpl_refreshTime)
+    " exe "set updatetime=" . string(g:SrcExpl_refreshTime)
 
     " Open all the folds
     if has("folding")
         " Open this file at first
         exe "normal! " . "zR"
         " Let it works during the whole editing session
-        exe "set foldlevelstart=" . "99"
+        " exe "set foldlevelstart=" . "99"
     endif
 
     " We must get the edit window number
