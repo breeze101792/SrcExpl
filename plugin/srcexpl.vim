@@ -136,7 +136,7 @@ if v:version < 700
     finish
 endif
 
-set cpoptions&vim
+" set cpoptions&vim
 
 " }}}
 
@@ -156,6 +156,10 @@ command! -nargs=0 -bar SrcExplClose
 
 command! -nargs=0 -bar SrcExplToggle
     \ call <SID>SrcExpl_Toggle()
+
+command! -nargs=0 -bar SrcExplRefresh
+    \ call <SID>SrcExpl_Refresh()
+
 
 " User interface for changing the height of the Source Explorer window
 if !exists('g:SrcExpl_winHeight')
@@ -207,7 +211,7 @@ endif
 " User interface to control if use option 'nested' for setting
 " AutoCmds, 0 for false, others for true
 if !exists('g:SrcExpl_nestedAutoCmd')
-    let g:SrcExpl_nestedAutoCmd = 1
+    let g:SrcExpl_nestedAutoCmd = 0
 endif
 
 " User interface to control if update the 'tags' file when loading
@@ -994,7 +998,7 @@ function! <SID>SrcExpl_SelToJump(dir)
     endwhile
 
     " Indeed go back to the edit window
-    silent! exe s:SrcExpl_editWin . "wincmd w"
+    " silent! exe s:SrcExpl_editWin . "wincmd w"
     " Open the file containing the definition context
     exe "edit " . l:fpath
 
@@ -1575,6 +1579,8 @@ function! <SID>SrcExpl_Toggle()
         call <SID>SrcExpl_WinOpen()
         " We change the flag to true
         let s:SrcExpl_isRunning = 1
+
+        silent call <SID>SrcExpl_Refresh()
     else
         " Not in the exact tab page
         if s:SrcExpl_tabPage != tabpagenr()
