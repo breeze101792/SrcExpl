@@ -1194,12 +1194,12 @@ function! <SID>SrcExpl_ViewOneDef(fpath, excmd)
 
         " Not highlight the word that had been searched.
         " Because execute Ex command will active a search event
-        let l:hlsearch = &hlsearch
-        set nohlsearch
+        " let l:hlsearch = &hlsearch
+        " set nohlsearch
         " Refresh all the screen
-        redraw
+        " redraw
         " Resotre the original setting for the highlight
-        let &hlsearch = l:hlsearch
+        " let &hlsearch = l:hlsearch
 
         " Go back to the edit window
         silent! exe s:SrcExpl_editWin . "wincmd w"
@@ -1284,7 +1284,7 @@ function! <SID>SrcExpl_GoDecl(expr)
         " Set the current buf-win attribute
         call <SID>SrcExpl_SetCurrMark()
         " Refresh all the screen
-        redraw
+        " redraw
         " Go back to the edit window
         silent! exe s:SrcExpl_editWin . "wincmd w"
         " We got a local definition
@@ -1551,11 +1551,14 @@ function! <SID>SrcExpl_Init()
 
     if g:SrcExpl_nestedAutoCmd != 0
         augroup SrcExpl_AutoCmd
-            au! CursorHold * nested call <SID>SrcExpl_Refresh()
+            " au! CursorHold * nested call <SID>SrcExpl_Refresh()
+            au! CursorHold * nested call timer_start(10, {-> s:SrcExpl_Refresh()})
         augroup end
     else
         augroup SrcExpl_AutoCmd
-            au! CursorHold * call <SID>SrcExpl_Refresh()
+            " au! CursorHold * call <SID>SrcExpl_Refresh()
+            " au! CursorHold * call timer_start(10, function('<SID>SrcExpl_Refresh'))
+            au! CursorHold * call timer_start(10, {-> s:SrcExpl_Refresh()})
         augroup end
     endif
 
